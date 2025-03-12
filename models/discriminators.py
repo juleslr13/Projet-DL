@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.utils as utils
-
+import numpy as np
 
 
 class DiscriminatorMLP(nn.Module):

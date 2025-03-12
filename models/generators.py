@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.utils as utils
-
+import numpy as np
 
 class GeneratorMLP(nn.Module):
     def __init__(self):
@@ -9,7 +9,7 @@ class GeneratorMLP(nn.Module):
         latent_dim=128
         img_shape=(3,64,64)
         self.img_shape=img_shape
-        def block(in_feat, out_feat):
+        def block(in_feat, out_feat,normalize=True):
             layers = [nn.Linear(in_feat, out_feat)]
             if normalize:
                 layers.append(nn.BatchNorm1d(out_feat, 0.8))
