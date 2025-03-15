@@ -13,7 +13,7 @@ def main():
         layout="wide",
     )
 
-    # Petit style global (optionnel)
+    # Petit style global
     st.markdown(
         """
         <style>
@@ -28,7 +28,6 @@ def main():
     st.title("Générateur de Pokémons avec un GAN :sparkles:")
 
     # Présence (ou non) du GPU
-    # -> ce test peut aussi être déplacé dans la page entraînement
     import torch
     if torch.cuda.is_available():
         st.success("CUDA détectée ! L'entraînement utilisera le GPU.")
