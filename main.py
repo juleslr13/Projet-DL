@@ -75,7 +75,7 @@ def fill_form():
     """
     with st.form(key='select_model'):
         generatorChoice = st.selectbox(
-            'Veuillez sélectionner un type de générateur :', ('MLP', 'CNN','DCNN'))
+            'Veuillez sélectionner un type de générateur :', ('MLP', 'CNN', 'DCNN'))
         st.write('Vous avez sélectionné: ', generatorChoice)
         discriminatorChoice = st.selectbox(
             'Veuillez sélectionner un type de discriminant :', ('MLP', 'CNN'))
@@ -83,11 +83,26 @@ def fill_form():
         lossChoice = st.selectbox(
             'Veuillez sélectionner le type de loss :', ('Cross-entropy', 'Wasserstein'))
         st.write('Vous avez sélectionné: ', lossChoice)
-        modelName = st.text_input("Nom du modèle: ")
-        epochs = st.number_input(label="Nombre d'epochs",value=100)
+        # Ajout d'une indication dans le placeholder
+        modelName = st.text_input("Nom du modèle (please fill with no spaces or special characters): ")
+        epochs = st.number_input(label="Nombre d'epochs", value=100)
         submit_button = st.form_submit_button(label='Train pokemons !')
-    if (submit_button or st.session_state.choices != None):
-        st.session_state.choices=[generatorChoice, discriminatorChoice, lossChoice, epochs, modelName]
+    
+    if submit_button or st.session_state.get("choices") is not None:
+        # Vérification : nom non vide
+        if not modelName:
+            st.error("Erreur : Le nom du modèle ne peut pas être vide. Veuillez le remplir.")
+            return
+        # Vérification : pas d'espaces
+        if re.search(r'\s', modelName):
+            st.error("Erreur : Le nom du modèle ne doit pas contenir d'espaces. Veuillez le remplir sans espaces.")
+            return
+        # Vérification : autoriser uniquement lettres, chiffres et underscore
+        if not re.match(r'^[A-Za-z0-9_]+$', modelName):
+            st.error("Erreur : Le nom du modèle doit contenir uniquement des lettres, chiffres et underscores. Veuillez le remplir correctement.")
+            return
+
+        st.session_state.choices = [generatorChoice, discriminatorChoice, lossChoice, epochs, modelName]
     return None
 
 # Formulaire pour la génération
