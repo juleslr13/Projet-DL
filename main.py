@@ -19,6 +19,7 @@ import torch.nn.functional as F
 from stqdm import stqdm
 import numpy as np
 import pickle
+from torchvision.transforms.functional import to_pil_image
 # Custom imports
 from models import GeneratorMLP, GeneratorCNN, GeneratorDCNN, DiscriminatorMLP, DiscriminatorCNN, DiscriminatorMLP_WGAN, DiscriminatorCNN_WGAN
 import utils.cuda_utils as cuda_utils
@@ -210,6 +211,7 @@ def entrainement():
         st.write("Générateur: " + generatorChoice)
         st.write("Discriminateur: " + discriminatorChoice)
         st.write("Nom du modèle: " + modelName)
+        st.write("Fonction de perte: " + lossChoice)
         WGAN = (lossChoice == 'Wasserstein')
         
         # Initialisation des modèles
@@ -246,6 +248,7 @@ def entrainement():
         
         st.write("Début de l'entraînement...")
         for epoch in range(epochs):
+            st.write(WGAN)
             i = 0
             for real_imgs, _ in stqdm(dev_dataloader):
                 if lossChoice == 'Wasserstein':
@@ -295,12 +298,12 @@ def entrainement():
             if epoch % 5 == 1:
                 save_image(img_utils.denorm(gen_imgs),
                            "resultsCNN/%d.png" % (epoch - 1), nrow=8)
-                st.image(img_utils.denorm(gen_imgs), caption=f"Échantillon à l'époque {epoch}", use_container_width=True)
+                st.image(to_pil_image(img_utils.denorm(gen_imgs)[-1]), caption=f"Échantillon à l'époque {epoch}", use_container_width=True)
             
             final_gen_imgs = gen_imgs
         
         # Affichage de l'image finale (conversion en PIL pour Streamlit)
-        from torchvision.transforms.functional import to_pil_image
+        
         st.subheader("Image générée finale")
         if final_gen_imgs is not None:
             final_img = to_pil_image(img_utils.denorm(final_gen_imgs[0].cpu()))
