@@ -20,8 +20,7 @@ from stqdm import stqdm
 import numpy as np
 import pickle
 # Custom imports
-from models.generators import GeneratorMLP, GeneratorCNN, GeneratorDCNN
-from models.discriminators import DiscriminatorMLP, DiscriminatorCNN
+from models import GeneratorMLP, GeneratorCNN, GeneratorDCNN, DiscriminatorMLP, DiscriminatorCNN, DiscriminatorMLP_WGAN, DiscriminatorCNN_WGAN
 import utils.cuda_utils as cuda_utils
 import utils.img_utils as img_utils
 
