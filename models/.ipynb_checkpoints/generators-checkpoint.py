@@ -61,3 +61,66 @@ class GeneratorCNN(nn.Module):
         out = out.view(out.shape[0], 512, self.init_size, self.init_size)
         img = self.model(out)
         return img
+
+class GeneratorDCNN(nn.Module):
+    """
+    Générateur CNN profond utilisant des convolutions transposées pour la montée en dimension.
+
+    Attributs:
+        latent_dim (int): Taille de l'espace latent.
+        img_channels (int): Nombre de canaux des images générées.
+        feature_maps (int): Nombre de filtres pour la première couche convolutive.
+    """
+
+    def __init__(self, latent_dim=128, img_channels=3, feature_maps=128):
+        """
+        Initialise l'architecture du générateur.
+
+        Args:
+            latent_dim (int): Dimension de l'espace latent.
+            img_channels (int): Nombre de canaux des images générées.
+            feature_maps (int): Nombre de filtres pour la première couche convolutive.
+        """
+        super(GeneratorDCNN, self).__init__()
+
+        self.model = nn.Sequential(
+            # Première couche - linéaire -> reshape en un tenseur 3D
+            nn.Linear(latent_dim, feature_maps * 8 * 4 * 4),
+            nn.BatchNorm1d(feature_maps * 8 * 4 * 4),
+            nn.LeakyReLU(0.2, inplace=True),
+
+            # Reshape en tenseur 4D
+            nn.Unflatten(1, (feature_maps * 8, 4, 4)),  
+
+            # Bloc 1 : 4x4 -> 8x8
+            nn.ConvTranspose2d(feature_maps * 8, feature_maps * 4, kernel_size=4, stride=2, padding=1),
+            nn.BatchNorm2d(feature_maps * 4),
+            nn.LeakyReLU(0.2, inplace=True),
+
+            # Bloc 2 : 8x8 -> 16x16
+            nn.ConvTranspose2d(feature_maps * 4, feature_maps * 2, kernel_size=4, stride=2, padding=1),
+            nn.BatchNorm2d(feature_maps * 2),
+            nn.LeakyReLU(0.2, inplace=True),
+
+            # Bloc 3 : 16x16 -> 32x32
+            nn.ConvTranspose2d(feature_maps * 2, feature_maps, kernel_size=4, stride=2, padding=1),
+            nn.BatchNorm2d(feature_maps),
+            nn.LeakyReLU(0.2, inplace=True),
+
+            # Dernière couche : 32x32 -> 64x64
+            
+            nn.ConvTranspose2d(feature_maps, img_channels, kernel_size=4, stride=2, padding=1),
+            nn.Tanh()  # Normalisation des pixels entre -1 et 1
+        )
+    def forward(self, z):
+        """
+        Passe avant du générateur.
+
+        Args:
+            z (torch.Tensor): Bruit aléatoire de l'espace latent (batch_size, latent_dim).
+
+        Returns:
+            torch.Tensor: Image générée (batch_size, img_channels, 64, 64).
+        """
+        img = self.model(z)
+        return img
