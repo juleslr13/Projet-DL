@@ -94,13 +94,15 @@ def fill_form():
             st.error("Erreur : Le nom du modèle ne peut pas être vide. Veuillez le remplir.")
             return
         # Vérification : pas d'espaces
-        if re.search(r'\s', modelName):
+        if " " in modelName:
             st.error("Erreur : Le nom du modèle ne doit pas contenir d'espaces. Veuillez le remplir sans espaces.")
             return
         # Vérification : autoriser uniquement lettres, chiffres et underscore
-        if not re.match(r'^[A-Za-z0-9_]+$', modelName):
-            st.error("Erreur : Le nom du modèle doit contenir uniquement des lettres, chiffres et underscores. Veuillez le remplir correctement.")
-            return
+        allowed_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_"
+        for char in modelName:
+            if char not in allowed_chars:
+                st.error("Erreur : Le nom du modèle doit contenir uniquement des lettres, chiffres et underscores.")
+                return
 
         st.session_state.choices = [generatorChoice, discriminatorChoice, lossChoice, epochs, modelName]
     return None
