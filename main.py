@@ -180,7 +180,6 @@ def entrainement():
             generator = GeneratorDCNN()
         else:
             raise Exception("Générateur non implémenté")
-        discriminatorChoice = 'CNN'
         if discriminatorChoice == 'MLP':
             if WGAN:
                 discriminator = DiscriminatorMLP_WGAN()
