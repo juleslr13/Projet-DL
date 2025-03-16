@@ -3,7 +3,9 @@ import torch
 from torch.utils.data import DataLoader
 from stqdm import stqdm
 import pickle
-
+from torchvision.utils import save_image
+from torchvision.transforms.functional import to_pil_image
+import torch.nn.functional as F
 # Imports de vos modules / classes
 from models import (
     GeneratorMLP, GeneratorCNN, GeneratorDCNN,
@@ -31,7 +33,7 @@ def fill_form():
         # Exemple : on ajoute quelques hyperparamètres
         learning_rate_g = st.number_input(
             "Learning rate (Générateur)", 
-            value=2e-4, 
+            value=1e-3, 
             min_value=1e-6, 
             max_value=1.0, 
             step=1e-5, 
@@ -39,7 +41,7 @@ def fill_form():
         )
         learning_rate_d = st.number_input(
             "Learning rate (Discriminateur)", 
-            value=2e-4, 
+            value=1e-3, 
             min_value=1e-6, 
             max_value=1.0, 
             step=1e-5, 
@@ -95,13 +97,29 @@ def entrainement():
 
     # Bouton pour réinitialiser le formulaire
     if st.button("Réinitialiser"):
-        st.session_state.choices = None
-        st.rerun()
+        if st.session_state.generator is not None:
+            (generatorChoice,
+             discriminatorChoice, 
+             lossChoice, 
+             epochs, 
+             modelName,
+             learning_rate_g, 
+             learning_rate_d,
+             batch_size) = st.session_state.choices
+            saveModel(st.session_state.generator, st.session_state.discriminator, modelName,
+                      generatorChoice, discriminatorChoice, lossChoice,
+                      edit=True)
+            st.session_state.generator = None
+            st.session_state.choices = None
+            st.rerun()
+        else :
+            st.rerun()
 
     # Vérifier si le formulaire a déjà été rempli
     if "choices" not in st.session_state:
         st.session_state.choices = None
-
+    if "generator" not in st.session_state:
+        st.session_state.generator = None
     # Appel du formulaire si aucun hyperparamètre n’est défini
     if st.session_state.choices is None:
         fill_form()
@@ -116,6 +134,7 @@ def entrainement():
          learning_rate_g, 
          learning_rate_d,
          batch_size) = st.session_state.choices
+
 
         st.write("**Générateur** :", generatorChoice)
         st.write("**Discriminateur** :", discriminatorChoice)
@@ -173,27 +192,80 @@ def entrainement():
 
             # Choix de l'optimiseur (en fonction de WGAN ou pas)
             if WGAN:
-                # WGAN classique : RMSProp
-                optim_g = torch.optim.RMSprop(generator.parameters(), lr=learning_rate_g)
-                optim_d = torch.optim.RMSprop(discriminator.parameters(), lr=learning_rate_d)
+                # WGAN classique
+                optimizer_G = torch.optim.Adam(generator.parameters(), lr=learning_rate_g,betas=(0.5, 0.9))
+                optimizer_D = torch.optim.Adam(discriminator.parameters(), lr=learning_rate_d,betas=(0.5, 0.9))
             else:
-                # GAN standard : Adam
-                optim_g = torch.optim.Adam(
+                # GAN standard
+                optimizer_G = torch.optim.Adam(
                     generator.parameters(), 
                     lr=learning_rate_g, 
-                    betas=(0.5, 0.999)
+                    betas=(0.5, 0.9)
                 )
-                optim_d = torch.optim.Adam(
+                optimizer_D = torch.optim.Adam(
                     discriminator.parameters(), 
                     lr=learning_rate_d, 
-                    betas=(0.5, 0.999)
+                    betas=(0.5, 0.9)
                 )
 
             # Boucle d'entraînement (exemple minimaliste)
-            for epoch in stqdm(range(int(epochs)), desc="Epoch"):
-                for real_imgs, _ in dataloader:
+            for epoch in range(epochs):
+                i=0
+                for real_imgs, _ in stqdm(dataloader):
                     real_imgs = real_imgs.to(device)
-                    # [votre code d’entraînement : forward/backward/optim etc.]
+                    if lossChoice == 'Wasserstein':
+                        optimizer_D.zero_grad()
+                        z = torch.randn(batch_size, latent_dim, device=device)
+                        gen_imgs = generator(z).detach()
+                        loss_D = torch.mean(discriminator(gen_imgs)) - torch.mean(discriminator(real_imgs))
+                        loss_D.backward()
+                        optimizer_D.step()
+                        for p in discriminator.parameters():
+                            p.data.clamp_(-0.03, 0.03)
+                        if i % 6 == 0:
+                            optimizer_G.zero_grad()
+                            gen_imgs = generator(z)
+                            loss_G = -torch.mean(discriminator(gen_imgs))
+                            loss_G.backward()
+                            optimizer_G.step()
+                        i+=1
+                    else:
+                        size=len(real_imgs)
+                        real_targets = torch.full((size, 1), 0.9, device=device)
+                        real_predictions = discriminator(real_imgs)
+                        real_loss = F.binary_cross_entropy(real_predictions, real_targets)
+                        z = torch.randn(size, latent_dim, device=device)
+                        gen_imgs = generator(z).detach()
+                        gen_targets = torch.zeros(size, 1, device=device)
+                        gen_predictions = discriminator(gen_imgs)
+                        gen_loss = F.binary_cross_entropy(gen_predictions, gen_targets)
+                        loss_D = real_loss + gen_loss
+                        loss_D.backward()
+                        optimizer_D.step()
+                        optimizer_G.zero_grad()
+                        z = torch.randn(batch_size, latent_dim, device=device)
+                        gen_imgs = generator(z)
+                        predictions = discriminator(gen_imgs)
+                        targets = torch.ones(batch_size, 1, device=device)
+                        loss_G = F.binary_cross_entropy(predictions, targets)
+                        loss_G.backward()
+                        optimizer_G.step()
+                        torch.nn.utils.clip_grad_norm_(discriminator.parameters(), max_norm=0.1)
+                        torch.nn.utils.clip_grad_norm_(generator.parameters(), max_norm=0.1)
+                
+                    
+                st.write("[Epoch %d/%d] [D loss: %f] [G loss: %f]" %
+                         (epoch, epochs, loss_D.item(), loss_G.item()))
+                st.session_state.generator = generator
+                st.session_state.discriminator = discriminator
+            
+            # Sauvegarde et affichage d'un échantillon toutes les 5 époques
+                if epoch % 5 == 1:
+                    save_image(img_utils.denorm(gen_imgs),
+                               "resultsCNN/%d.png" % (epoch - 1), nrow=8)
+                    st.write("Échantillon époque ", epoch) 
+                    st.image([to_pil_image(img_utils.denorm(gen_imgs)[i]) for i in range(min(batch_size,10))], width = 100,use_container_width=False)
+                    
 
             # Sauvegarde
             saveModel(generator, discriminator, modelName,
