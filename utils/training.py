@@ -191,24 +191,10 @@ def entrainement():
             discriminator = discriminator.to(device)
 
             # Choix de l'optimiseur (en fonction de WGAN ou pas)
-            if WGAN:
-                # WGAN classique
-                optimizer_G = torch.optim.Adam(generator.parameters(), lr=learning_rate_g,betas=(0.5, 0.9))
-                optimizer_D = torch.optim.Adam(discriminator.parameters(), lr=learning_rate_d,betas=(0.5, 0.9))
-            else:
-                # GAN standard
-                optimizer_G = torch.optim.Adam(
-                    generator.parameters(), 
-                    lr=learning_rate_g, 
-                    betas=(0.5, 0.9)
-                )
-                optimizer_D = torch.optim.Adam(
-                    discriminator.parameters(), 
-                    lr=learning_rate_d, 
-                    betas=(0.5, 0.9)
-                )
-
-            # Boucle d'entraînement (exemple minimaliste)
+            optimizer_G = torch.optim.Adam(generator.parameters(), lr=learning_rate_g,betas=(0.5, 0.9))
+            optimizer_D = torch.optim.Adam(discriminator.parameters(), lr=learning_rate_d,betas=(0.5, 0.9))
+                
+            # Boucle d'entraînement
             for epoch in range(epochs):
                 i=0
                 for real_imgs, _ in stqdm(dataloader):
@@ -231,7 +217,7 @@ def entrainement():
                         i+=1
                     else:
                         size=len(real_imgs)
-                        real_targets = torch.full((size, 1), 0.9, device=device)
+                        real_targets = torch.full((size, 1), 0.9, device=device) # Introduction de bruit
                         real_predictions = discriminator(real_imgs)
                         real_loss = F.binary_cross_entropy(real_predictions, real_targets)
                         z = torch.randn(size, latent_dim, device=device)
