@@ -246,9 +246,9 @@ def entrainement():
                 st.session_state.discriminator = discriminator
             
             # Sauvegarde et affichage d'un échantillon toutes les 5 époques
-                if epoch % 5 == 1:
+                if epoch % 5 == 0:
                     save_image(img_utils.denorm(gen_imgs),
-                               "resultsCNN/%d.png" % (epoch - 1), nrow=8)
+                               "results/%d.png" % epoch, nrow=8)
                     st.write("Échantillon époque ", epoch) 
                     st.image([to_pil_image(img_utils.denorm(gen_imgs)[i]) for i in range(min(batch_size,10))], width = 100,use_container_width=False)
                     
