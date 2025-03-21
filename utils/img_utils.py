@@ -24,8 +24,6 @@ import matplotlib.pyplot as plt
 import streamlit as st
 
 # Variable globale pour stocker les statistiques de normalisation
-global norm_stats
-norm_stats = None
 
 
 def make_dataset(IMAGE_DIR, image_size, batch_size, normalization_stats):
@@ -45,8 +43,6 @@ def make_dataset(IMAGE_DIR, image_size, batch_size, normalization_stats):
         torch.utils.data.ConcatDataset: Dataset contenant les transformations
         appliquées.
     """
-    global norm_stats
-    norm_stats = normalization_stats
 
     normal_dataset = ImageFolder(IMAGE_DIR, transform=T.Compose([
         T.Resize(image_size),
@@ -69,7 +65,7 @@ def make_dataset(IMAGE_DIR, image_size, batch_size, normalization_stats):
     return dataset
 
 
-def denorm(image):
+def denorm(image,norm_stats):
     """
     Annule la normalisation d'une image.
 
@@ -82,7 +78,7 @@ def denorm(image):
     return image * norm_stats[1][0] + norm_stats[0][0]
 
 
-def show_images(images, nmax=64, nrow=8):
+def show_images(images, norm_stats, nmax=64, nrow=8):
     """
     Affiche une grille d'images.
 
@@ -94,12 +90,12 @@ def show_images(images, nmax=64, nrow=8):
     fig, ax = plt.subplots(figsize=(8, 8))
     ax.set_xticks([])
     ax.set_yticks([])
-    ax.imshow(make_grid(denorm(images.detach()[:nmax]), nrow=nrow).
+    ax.imshow(make_grid(denorm(images.detach()[:nmax],norm_stats), nrow=nrow).
               permute(1, 2, 0))
     st.pyplot(fig)
 
 
-def show_batch(dataloader, nmax=64):
+def show_batch(dataloader, norm_stats, nmax=64):
     """
     Affiche un lot d'images provenant d'un `DataLoader`.
 
@@ -109,7 +105,7 @@ def show_batch(dataloader, nmax=64):
         nmax (int, optional): Nombre maximum d'images à afficher (default: 64).
     """
     for images, _ in dataloader:
-        show_images(images, nmax)
+        show_images(images, norm_stats, nmax)
         break
 
 

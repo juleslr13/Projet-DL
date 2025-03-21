@@ -61,6 +61,8 @@ def generation():
         WGAN = (lossChoice == 'Wasserstein')
         latent_dim = 128
 
+        normalization_stats = ((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
+
         # Instanciation du générateur
         if generatorChoice == 'MLP':
             generator = GeneratorMLP()
@@ -81,10 +83,16 @@ def generation():
             raise Exception("Discriminateur non implémenté")
 
         # Chargement des poids
-        generator.load_state_dict(torch.load(f'./trainedModels/generators/{modelName}.pth'))
-        discriminator.load_state_dict(torch.load(f'./trainedModels/discriminators/{modelName}.pth'))
 
         device = cuda_utils.get_training_device()
+
+        generator.load_state_dict(torch.load(
+            f'./trainedModels/generators/{modelName}.pth',map_location=device
+        ))
+        discriminator.load_state_dict(torch.load(
+            f'./trainedModels/discriminators/{modelName}.pth',map_location=device
+        ))
+
         generator = generator.to(device)
         generator.eval()
 
@@ -97,7 +105,8 @@ def generation():
 
         # Affichage sous forme d'une grille
         img_utils.show_images(
-            img_utils.denorm(gen_imgs),
+            img_utils.denorm(gen_imgs,normalization_stats),
+            normalization_stats,
             nbPokemons,
             nrow=int(np.sqrt(nbPokemons))
         )
