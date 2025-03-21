@@ -15,6 +15,7 @@
     <script src="_static/translations.js?v=e6b791cb"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Recherche" href="search.html" />
+    <link rel="next" title="utils package" href="utils.html" />
     <link rel="prev" title="ProjetDL" href="modules.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -40,22 +41,99 @@
 </section>
 <section id="module-models.discriminators">
 <span id="models-discriminators-module"></span><h2>models.discriminators module<a class="headerlink" href="#module-models.discriminators" title="Lien vers cette rubrique">¶</a></h2>
+<section id="module-discriminators-py">
+<h3>Module <cite>discriminators.py</cite><a class="headerlink" href="#module-discriminators-py" title="Lien vers cette rubrique">¶</a></h3>
+<p>Ce module définit plusieurs architectures de discriminateurs pour un GAN
+(réseau antagoniste génératif).</p>
+<section id="classes">
+<h4>Classes :<a class="headerlink" href="#classes" title="Lien vers cette rubrique">¶</a></h4>
+<ul class="simple">
+<li><p><cite>DiscriminatorMLP</cite> : Discriminateur basé sur un MLP
+(Multi-Layer Perceptron).</p></li>
+<li><p><cite>DiscriminatorMLP_WGAN</cite> : Variante MLP pour un Wasserstein GAN.</p></li>
+<li><p><cite>DiscriminatorCNN</cite> : Discriminateur basé sur des convolutions (DCGAN).</p></li>
+<li><p><cite>DiscriminatorCNN_WGAN</cite> : Variante CNN pour un Wasserstein GAN.</p></li>
+</ul>
+<p>Auteur : [Gleyo Alexis, Le Roy Jules, Legris Simon]
+Date : [20/03/2025]</p>
+</section>
+</section>
 <dl class="py class">
 <dt class="sig sig-object py" id="models.discriminators.DiscriminatorCNN">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">models.discriminators.</span></span><span class="sig-name descname"><span class="pre">DiscriminatorCNN</span></span><a class="headerlink" href="#models.discriminators.DiscriminatorCNN" title="Lien vers cette définition">¶</a></dt>
 <dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Discriminateur basé sur un réseau convolutif (CNN), utilisé dans DCGAN.</p>
+<p>Ce modèle applique une série de convolutions pour extraire des
+caractéristiques de l’image, puis passe à une couche dense finale.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="models.discriminators.DiscriminatorCNN.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#models.discriminators.DiscriminatorCNN.model" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Réseau de couches convolutives.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.nn.Sequential</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="models.discriminators.DiscriminatorCNN.forward">
 <span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.discriminators.DiscriminatorCNN.forward" title="Lien vers cette définition">¶</a></dt>
-<dd><p>Define the computation performed at every call.</p>
-<p>Should be overridden by all subclasses.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Although the recipe for forward pass needs to be defined within
-this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
-instead of this since the former takes care of running the
-registered hooks while the latter silently ignores them.</p>
-</div>
+<dd><p>Passe avant du discriminateur CNN.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img</strong> (<em>torch.Tensor</em>) – Image d’entrée sous forme de tenseur</p></li>
+<li><p><strong>`</strong> (<em>batch_size</em><em>, </em><em>3</em><em>, </em><em>64</em><em>, </em><em>64</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>Score de validité de l’image.</p>
+</dd>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="models.discriminators.DiscriminatorCNN_WGAN">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">models.discriminators.</span></span><span class="sig-name descname"><span class="pre">DiscriminatorCNN_WGAN</span></span><a class="headerlink" href="#models.discriminators.DiscriminatorCNN_WGAN" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Variante du <cite>DiscriminatorCNN</cite> pour Wasserstein GAN (WGAN).</p>
+<p>Ce modèle applique une série de convolutions et ne contient pas
+de fonction d’activation <cite>Sigmoid</cite>, car WGAN utilise une perte Wasserstein.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="models.discriminators.DiscriminatorCNN_WGAN.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#models.discriminators.DiscriminatorCNN_WGAN.model" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Réseau de couches convolutives.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.nn.Sequential</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="models.discriminators.DiscriminatorCNN_WGAN.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.discriminators.DiscriminatorCNN_WGAN.forward" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Passe avant du discriminateur CNN WGAN.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img</strong> (<em>torch.Tensor</em>) – Image d’entrée sous forme de tenseur</p></li>
+<li><p><strong>`</strong> (<em>batch_size</em><em>, </em><em>3</em><em>, </em><em>64</em><em>, </em><em>64</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>Score Wasserstein de l’image.</p>
+</dd>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -64,18 +142,89 @@ registered hooks while the latter silently ignores them.</p>
 <dt class="sig sig-object py" id="models.discriminators.DiscriminatorMLP">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">models.discriminators.</span></span><span class="sig-name descname"><span class="pre">DiscriminatorMLP</span></span><a class="headerlink" href="#models.discriminators.DiscriminatorMLP" title="Lien vers cette définition">¶</a></dt>
 <dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Discriminateur basé sur un réseau de neurones entièrement connecté
+(MLP).</p>
+<p>Ce modèle prend une image sous forme de tenseur, l’aplatit et la passe
+dans un réseau de couches linéaires pour prédire sa validité.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="models.discriminators.DiscriminatorMLP.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#models.discriminators.DiscriminatorMLP.model" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Réseau de couches entièrement</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.nn.Sequential</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">connectées.</span></span></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="models.discriminators.DiscriminatorMLP.forward">
 <span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.discriminators.DiscriminatorMLP.forward" title="Lien vers cette définition">¶</a></dt>
-<dd><p>Define the computation performed at every call.</p>
-<p>Should be overridden by all subclasses.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Although the recipe for forward pass needs to be defined within
-this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
-instead of this since the former takes care of running the
-registered hooks while the latter silently ignores them.</p>
-</div>
+<dd><p>Passe avant du discriminateur MLP.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img</strong> (<em>torch.Tensor</em>) – Image d’entrée sous forme de tenseur</p></li>
+<li><p><strong>`</strong> (<em>batch_size</em><em>, </em><em>3</em><em>, </em><em>64</em><em>, </em><em>64</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>Score de validité de l’image.</p>
+</dd>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="models.discriminators.DiscriminatorMLP_WGAN">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">models.discriminators.</span></span><span class="sig-name descname"><span class="pre">DiscriminatorMLP_WGAN</span></span><a class="headerlink" href="#models.discriminators.DiscriminatorMLP_WGAN" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Variante du <cite>DiscriminatorMLP</cite> pour Wasserstein GAN (WGAN).</p>
+<p>Ce modèle ne contient pas de fonction d’activation <cite>Sigmoid</cite>,
+car WGAN utilise une perte basée sur une distance Wasserstein.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="models.discriminators.DiscriminatorMLP_WGAN.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#models.discriminators.DiscriminatorMLP_WGAN.model" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Réseau de couches entièrement</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.nn.Sequential</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">connectées.</span></span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="models.discriminators.DiscriminatorMLP_WGAN.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.discriminators.DiscriminatorMLP_WGAN.forward" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Passe avant du discriminateur MLP WGAN.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img</strong> (<em>torch.Tensor</em>) – Image d’entrée sous forme de tenseur</p></li>
+<li><p><strong>`</strong> (<em>batch_size</em><em>, </em><em>3</em><em>, </em><em>64</em><em>, </em><em>64</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>Score Wasserstein de l’image.</p>
+</dd>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -83,42 +232,173 @@ registered hooks while the latter silently ignores them.</p>
 </section>
 <section id="module-models.generators">
 <span id="models-generators-module"></span><h2>models.generators module<a class="headerlink" href="#module-models.generators" title="Lien vers cette rubrique">¶</a></h2>
+<section id="module-generators-py">
+<h3>Module <cite>generators.py</cite><a class="headerlink" href="#module-generators-py" title="Lien vers cette rubrique">¶</a></h3>
+<p>Ce module définit différentes architectures de générateurs pour un réseau
+antagoniste génératif (GAN).</p>
+<section id="id1">
+<h4>Classes :<a class="headerlink" href="#id1" title="Lien vers cette rubrique">¶</a></h4>
+<ul class="simple">
+<li><p><cite>GeneratorMLP</cite> : Générateur basé sur un MLP (Multi-Layer Perceptron).</p></li>
+<li><p><cite>GeneratorCNN</cite> : Générateur basé sur un CNN utilisant l’upsampling.</p></li>
+<li><p><cite>GeneratorDCNN</cite> : Générateur basé sur un DCGAN (Deep Convolutional GAN)
+avec des convolutions transposées.</p></li>
+</ul>
+<p>Auteur : [Gleyo Alexis, Le Roy Jules, Legris Simon]
+Date : [20/03/2025]</p>
+</section>
+</section>
 <dl class="py class">
 <dt class="sig sig-object py" id="models.generators.GeneratorCNN">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">models.generators.</span></span><span class="sig-name descname"><span class="pre">GeneratorCNN</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">latent_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">128</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.generators.GeneratorCNN" title="Lien vers cette définition">¶</a></dt>
 <dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Générateur utilisant un CNN avec <cite>Upsample</cite> pour agrandir l’image
+progressivement.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="models.generators.GeneratorCNN.init_size">
+<span class="sig-name descname"><span class="pre">init_size</span></span><a class="headerlink" href="#models.generators.GeneratorCNN.init_size" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Taille initiale de la feature map avant convolution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="models.generators.GeneratorCNN.fc">
+<span class="sig-name descname"><span class="pre">fc</span></span><a class="headerlink" href="#models.generators.GeneratorCNN.fc" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Couche fully-connected projetant l’espace latent.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.nn.Linear</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="models.generators.GeneratorCNN.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#models.generators.GeneratorCNN.model" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Bloc de convolutions et upsampling.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.nn.Sequential</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="models.generators.GeneratorCNN.forward">
 <span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.generators.GeneratorCNN.forward" title="Lien vers cette définition">¶</a></dt>
-<dd><p>Define the computation performed at every call.</p>
-<p>Should be overridden by all subclasses.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Although the recipe for forward pass needs to be defined within
-this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
-instead of this since the former takes care of running the
-registered hooks while the latter silently ignores them.</p>
-</div>
+<dd><p>Passe avant du générateur CNN.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>z</strong> (<em>torch.Tensor</em>) – Bruit aléatoire de l’espace latent</p></li>
+<li><p><strong>(</strong><strong>batch_size</strong></p></li>
+<li><p><strong>latent_dim</strong><strong>)</strong><strong>.</strong></p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>Image générée (batch_size, 3, 64, 64).</p>
+</dd>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="models.generators.GeneratorDCNN">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">models.generators.</span></span><span class="sig-name descname"><span class="pre">GeneratorDCNN</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">latent_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">128</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">img_channels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_maps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">128</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.generators.GeneratorDCNN" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Générateur DCGAN utilisant des convolutions transposées pour agrandir
+progressivement l’image.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="models.generators.GeneratorDCNN.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#models.generators.GeneratorDCNN.model" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Bloc de convolutions transposées.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.nn.Sequential</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="models.generators.GeneratorDCNN.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.generators.GeneratorDCNN.forward" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Passe avant du générateur DCGAN.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>z</strong> (<em>torch.Tensor</em>) – Bruit aléatoire de l’espace latent</p></li>
+<li><p><strong>(</strong><strong>batch_size</strong></p></li>
+<li><p><strong>latent_dim</strong><strong>)</strong><strong>.</strong></p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>Image générée (batch_size, img_channels, 64, 64).</p>
+</dd>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="models.generators.GeneratorMLP">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">models.generators.</span></span><span class="sig-name descname"><span class="pre">GeneratorMLP</span></span><a class="headerlink" href="#models.generators.GeneratorMLP" title="Lien vers cette définition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">models.generators.</span></span><span class="sig-name descname"><span class="pre">GeneratorMLP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">latent_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">128</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">img_shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(3,</span> <span class="pre">64,</span> <span class="pre">64)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.generators.GeneratorMLP" title="Lien vers cette définition">¶</a></dt>
 <dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Générateur basé sur un réseau de neurones entièrement connecté (MLP).</p>
+<p>Ce modèle prend un vecteur latent et génère une image en utilisant
+plusieurs couches <cite>Linear</cite>.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="models.generators.GeneratorMLP.img_shape">
+<span class="sig-name descname"><span class="pre">img_shape</span></span><a class="headerlink" href="#models.generators.GeneratorMLP.img_shape" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Dimensions de l’image de sortie</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">(channels,</span> <span class="pre">height,</span> <span class="pre">width).</span></span></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="models.generators.GeneratorMLP.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#models.generators.GeneratorMLP.model" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Réseau de couches entièrement connectées.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.nn.Sequential</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="models.generators.GeneratorMLP.forward">
 <span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.generators.GeneratorMLP.forward" title="Lien vers cette définition">¶</a></dt>
-<dd><p>Define the computation performed at every call.</p>
-<p>Should be overridden by all subclasses.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Although the recipe for forward pass needs to be defined within
-this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
-instead of this since the former takes care of running the
-registered hooks while the latter silently ignores them.</p>
-</div>
+<dd><p>Passe avant du générateur MLP.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>z</strong> (<em>torch.Tensor</em>) – Vecteur latent de forme (batch_size, latent_dim).</p>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>Image générée de forme (batch_size, <a href="#id2"><span class="problematic" id="id3">*</span></a>img_shape).</p>
+</dd>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -166,6 +446,7 @@ registered hooks while the latter silently ignores them.</p>
 <li class="toctree-l2"><a class="reference internal" href="#module-models">Module contents</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">utils package</a></li>
 </ul>
 
 <div class="relations">
@@ -173,6 +454,7 @@ registered hooks while the latter silently ignores them.</p>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
       <li>Previous: <a href="modules.html" title="Chapitre précédent">ProjetDL</a></li>
+      <li>Next: <a href="utils.html" title="Chapitre suivant">utils package</a></li>
   </ul></li>
 </ul>
 </div>

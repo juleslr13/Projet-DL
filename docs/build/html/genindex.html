@@ -40,19 +40,32 @@
  | <a href="#F"><strong>F</strong></a>
  | <a href="#G"><strong>G</strong></a>
  | <a href="#I"><strong>I</strong></a>
- | <a href="#L"><strong>L</strong></a>
  | <a href="#M"><strong>M</strong></a>
  | <a href="#S"><strong>S</strong></a>
+ | <a href="#T"><strong>T</strong></a>
+ | <a href="#U"><strong>U</strong></a>
  
 </div>
 <h2 id="D">D</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="models.html#models.discriminators.DiscriminatorCNN">DiscriminatorCNN (classe dans models.discriminators)</a>
+      <li><a href="utils.html#utils.cuda_utils.DeviceDataLoader.dataloader">dataloader (attribut utils.cuda_utils.DeviceDataLoader)</a>
+</li>
+      <li><a href="utils.html#utils.img_utils.denorm">denorm() (dans le module utils.img_utils)</a>
+</li>
+      <li><a href="utils.html#utils.cuda_utils.DeviceDataLoader.device">device (attribut utils.cuda_utils.DeviceDataLoader)</a>
+</li>
+      <li><a href="utils.html#utils.cuda_utils.DeviceDataLoader">DeviceDataLoader (classe dans utils.cuda_utils)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="models.html#models.discriminators.DiscriminatorCNN">DiscriminatorCNN (classe dans models.discriminators)</a>
+</li>
+      <li><a href="models.html#models.discriminators.DiscriminatorCNN_WGAN">DiscriminatorCNN_WGAN (classe dans models.discriminators)</a>
+</li>
       <li><a href="models.html#models.discriminators.DiscriminatorMLP">DiscriminatorMLP (classe dans models.discriminators)</a>
+</li>
+      <li><a href="models.html#models.discriminators.DiscriminatorMLP_WGAN">DiscriminatorMLP_WGAN (classe dans models.discriminators)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -60,7 +73,7 @@
 <h2 id="E">E</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="main.html#main.entrainement">entrainement() (dans le module main)</a>
+      <li><a href="utils.html#utils.training.entrainement">entrainement() (dans le module utils.training)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -68,14 +81,22 @@
 <h2 id="F">F</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="main.html#main.fill_form">fill_form() (dans le module main)</a>
+      <li><a href="models.html#models.generators.GeneratorCNN.fc">fc (attribut models.generators.GeneratorCNN)</a>
+</li>
+      <li><a href="utils.html#utils.training.fill_form">fill_form() (dans le module utils.training)</a>
 </li>
       <li><a href="models.html#models.discriminators.DiscriminatorCNN.forward">forward() (méthode models.discriminators.DiscriminatorCNN)</a>
 
       <ul>
+        <li><a href="models.html#models.discriminators.DiscriminatorCNN_WGAN.forward">(méthode models.discriminators.DiscriminatorCNN_WGAN)</a>
+</li>
         <li><a href="models.html#models.discriminators.DiscriminatorMLP.forward">(méthode models.discriminators.DiscriminatorMLP)</a>
 </li>
+        <li><a href="models.html#models.discriminators.DiscriminatorMLP_WGAN.forward">(méthode models.discriminators.DiscriminatorMLP_WGAN)</a>
+</li>
         <li><a href="models.html#models.generators.GeneratorCNN.forward">(méthode models.generators.GeneratorCNN)</a>
+</li>
+        <li><a href="models.html#models.generators.GeneratorDCNN.forward">(méthode models.generators.GeneratorDCNN)</a>
 </li>
         <li><a href="models.html#models.generators.GeneratorMLP.forward">(méthode models.generators.GeneratorMLP)</a>
 </li>
@@ -86,11 +107,19 @@
 <h2 id="G">G</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="utils.html#utils.generate.generation">generation() (dans le module utils.generate)</a>
+</li>
+      <li><a href="utils.html#utils.generate.generation_form">generation_form() (dans le module utils.generate)</a>
+</li>
       <li><a href="models.html#models.generators.GeneratorCNN">GeneratorCNN (classe dans models.generators)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="models.html#models.generators.GeneratorDCNN">GeneratorDCNN (classe dans models.generators)</a>
+</li>
       <li><a href="models.html#models.generators.GeneratorMLP">GeneratorMLP (classe dans models.generators)</a>
+</li>
+      <li><a href="utils.html#utils.cuda_utils.get_training_device">get_training_device() (dans le module utils.cuda_utils)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -98,15 +127,11 @@
 <h2 id="I">I</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="main.html#main.initialize_device">initialize_device() (dans le module main)</a>
+      <li><a href="models.html#models.generators.GeneratorMLP.img_shape">img_shape (attribut models.generators.GeneratorMLP)</a>
 </li>
   </ul></td>
-</tr></table>
-
-<h2 id="L">L</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="main.html#main.load_dataset">load_dataset() (dans le module main)</a>
+      <li><a href="models.html#models.generators.GeneratorCNN.init_size">init_size (attribut models.generators.GeneratorCNN)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -123,6 +148,24 @@
       </ul></li>
       <li><a href="main.html#main.main">main() (dans le module main)</a>
 </li>
+      <li><a href="utils.html#utils.img_utils.make_dataset">make_dataset() (dans le module utils.img_utils)</a>
+</li>
+      <li><a href="models.html#models.discriminators.DiscriminatorCNN.model">model (attribut models.discriminators.DiscriminatorCNN)</a>
+
+      <ul>
+        <li><a href="models.html#models.discriminators.DiscriminatorCNN_WGAN.model">(attribut models.discriminators.DiscriminatorCNN_WGAN)</a>
+</li>
+        <li><a href="models.html#models.discriminators.DiscriminatorMLP.model">(attribut models.discriminators.DiscriminatorMLP)</a>
+</li>
+        <li><a href="models.html#models.discriminators.DiscriminatorMLP_WGAN.model">(attribut models.discriminators.DiscriminatorMLP_WGAN)</a>
+</li>
+        <li><a href="models.html#models.generators.GeneratorCNN.model">(attribut models.generators.GeneratorCNN)</a>
+</li>
+        <li><a href="models.html#models.generators.GeneratorDCNN.model">(attribut models.generators.GeneratorDCNN)</a>
+</li>
+        <li><a href="models.html#models.generators.GeneratorMLP.model">(attribut models.generators.GeneratorMLP)</a>
+</li>
+      </ul></li>
       <li>
     models
 
@@ -130,6 +173,8 @@
         <li><a href="models.html#module-models">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     models.discriminators
 
@@ -137,8 +182,6 @@
         <li><a href="models.html#module-models.discriminators">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     models.generators
 
@@ -158,6 +201,16 @@
 </li>
         <li><a href="models.html#module-models.generators">models.generators</a>
 </li>
+        <li><a href="utils.html#module-utils">utils</a>
+</li>
+        <li><a href="utils.html#module-utils.cuda_utils">utils.cuda_utils</a>
+</li>
+        <li><a href="utils.html#module-utils.generate">utils.generate</a>
+</li>
+        <li><a href="utils.html#module-utils.img_utils">utils.img_utils</a>
+</li>
+        <li><a href="utils.html#module-utils.training">utils.training</a>
+</li>
       </ul></li>
   </ul></td>
 </tr></table>
@@ -165,8 +218,65 @@
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="main.html#main.saveModel">saveModel() (dans le module main)</a>
+      <li><a href="utils.html#utils.training.saveModel">saveModel() (dans le module utils.training)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="utils.html#utils.img_utils.show_batch">show_batch() (dans le module utils.img_utils)</a>
+</li>
+      <li><a href="utils.html#utils.img_utils.show_images">show_images() (dans le module utils.img_utils)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="T">T</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="utils.html#utils.cuda_utils.to_device">to_device() (dans le module utils.cuda_utils)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="U">U</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    utils
+
+      <ul>
+        <li><a href="utils.html#module-utils">module</a>
+</li>
+      </ul></li>
+      <li>
+    utils.cuda_utils
+
+      <ul>
+        <li><a href="utils.html#module-utils.cuda_utils">module</a>
+</li>
+      </ul></li>
+      <li>
+    utils.generate
+
+      <ul>
+        <li><a href="utils.html#module-utils.generate">module</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    utils.img_utils
+
+      <ul>
+        <li><a href="utils.html#module-utils.img_utils">module</a>
+</li>
+      </ul></li>
+      <li>
+    utils.training
+
+      <ul>
+        <li><a href="utils.html#module-utils.training">module</a>
+</li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -202,6 +312,7 @@
 <li class="toctree-l1"><a class="reference internal" href="main.html">main module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">ProjetDL</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models.html">models package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">utils package</a></li>
 </ul>
 
 <div class="relations">

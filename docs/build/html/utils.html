@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+
+<html lang="fr" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>utils package &#8212; Documentation Projet DeepLearning html</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <script src="_static/documentation_options.js?v=bf27aae9"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/translations.js?v=e6b791cb"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="prev" title="models package" href="models.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="utils-package">
+<h1>utils package<a class="headerlink" href="#utils-package" title="Lien vers cette rubrique">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Lien vers cette rubrique">¶</a></h2>
+</section>
+<section id="module-utils.cuda_utils">
+<span id="utils-cuda-utils-module"></span><h2>utils.cuda_utils module<a class="headerlink" href="#module-utils.cuda_utils" title="Lien vers cette rubrique">¶</a></h2>
+<section id="module-cuda-utils-py">
+<h3>Module <cite>cuda_utils.py</cite><a class="headerlink" href="#module-cuda-utils-py" title="Lien vers cette rubrique">¶</a></h3>
+<p>Ce module fournit des outils pour gérer l’utilisation de CUDA et déplacer les
+données
+vers le bon périphérique (GPU ou CPU).</p>
+<section id="fonctionnalites">
+<h4>Fonctionnalités :<a class="headerlink" href="#fonctionnalites" title="Lien vers cette rubrique">¶</a></h4>
+<ul class="simple">
+<li><p><cite>get_training_device()</cite> : Vérifie si un GPU est disponible et retourne le
+périphérique approprié.</p></li>
+<li><p><cite>to_device(data, device)</cite> : Déplace les données vers le périphérique
+sélectionné.</p></li>
+<li><p><cite>DeviceDataLoader</cite> : Un wrapper pour déplacer automatiquement les lots de
+données vers le bon périphérique.</p></li>
+</ul>
+<p>Auteur : [Gleyo Alexis, Le Roy Jules, Legris Simon]
+Date : [20/03/25]</p>
+</section>
+</section>
+<dl class="py class">
+<dt class="sig sig-object py" id="utils.cuda_utils.DeviceDataLoader">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">utils.cuda_utils.</span></span><span class="sig-name descname"><span class="pre">DeviceDataLoader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataloader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.cuda_utils.DeviceDataLoader" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Wrapper pour un <cite>DataLoader</cite> qui déplace automatiquement les lots de
+données vers un périphérique donné.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="utils.cuda_utils.DeviceDataLoader.dataloader">
+<span class="sig-name descname"><span class="pre">dataloader</span></span><a class="headerlink" href="#utils.cuda_utils.DeviceDataLoader.dataloader" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Le <cite>DataLoader</cite> sous-jacent.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.utils.data.DataLoader</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="utils.cuda_utils.DeviceDataLoader.device">
+<span class="sig-name descname"><span class="pre">device</span></span><a class="headerlink" href="#utils.cuda_utils.DeviceDataLoader.device" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Le périphérique où les données seront déplacées</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.device</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">(`cuda`</span> <span class="pre">ou</span> <span class="pre">`cpu`).</span></span></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.cuda_utils.get_training_device">
+<span class="sig-prename descclassname"><span class="pre">utils.cuda_utils.</span></span><span class="sig-name descname"><span class="pre">get_training_device</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.cuda_utils.get_training_device" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Vérifie si CUDA est disponible et retourne le périphérique
+d’entraînement.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Renvoie<span class="colon">:</span></dt>
+<dd class="field-odd"><p><cite>cuda</cite> si une GPU est disponible, sinon <cite>cpu</cite>.</p>
+</dd>
+<dt class="field-even">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-even"><p>torch.device</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.cuda_utils.to_device">
+<span class="sig-prename descclassname"><span class="pre">utils.cuda_utils.</span></span><span class="sig-name descname"><span class="pre">to_device</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.cuda_utils.to_device" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Déplace un tenseur ou une liste de tenseurs vers le périphérique spécifié.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>torch.Tensor</em><em> | </em><em>list</em><em> | </em><em>tuple</em>) – Données à déplacer (un tenseur ou</p></li>
+<li><p><strong>tenseurs</strong><strong>)</strong><strong>.</strong> (<em>une liste/tuple de</em>)</p></li>
+<li><p><strong>device</strong> (<em>torch.device</em>) – Périphérique cible (<cite>cuda</cite> ou <cite>cpu</cite>).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>Données déplacées sur le périphérique
+cible.</p>
+</dd>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor | list | tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-utils.generate">
+<span id="utils-generate-module"></span><h2>utils.generate module<a class="headerlink" href="#module-utils.generate" title="Lien vers cette rubrique">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.generate.generation">
+<span class="sig-prename descclassname"><span class="pre">utils.generate.</span></span><span class="sig-name descname"><span class="pre">generation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.generate.generation" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Page Streamlit pour générer des images depuis un modèle existant.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.generate.generation_form">
+<span class="sig-prename descclassname"><span class="pre">utils.generate.</span></span><span class="sig-name descname"><span class="pre">generation_form</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">listModels</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.generate.generation_form" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Formulaire Streamlit pour sélectionner le modèle entraîné et le nombre de Pokémons à générer.</p>
+</dd></dl>
+
+</section>
+<section id="module-utils.img_utils">
+<span id="utils-img-utils-module"></span><h2>utils.img_utils module<a class="headerlink" href="#module-utils.img_utils" title="Lien vers cette rubrique">¶</a></h2>
+<section id="module-img-utils-py">
+<h3>Module <cite>img_utils.py</cite><a class="headerlink" href="#module-img-utils-py" title="Lien vers cette rubrique">¶</a></h3>
+<p>Ce module contient des outils pour le chargement, la transformation et
+l’affichage d’images dans le cadre de l’entraînement d’un GAN.</p>
+<section id="id1">
+<h4>Fonctionnalités :<a class="headerlink" href="#id1" title="Lien vers cette rubrique">¶</a></h4>
+<ul class="simple">
+<li><p><cite>make_dataset()</cite> : Charge un dataset d’images avec transformations.</p></li>
+<li><p><cite>denorm()</cite> : Annule la normalisation des images.</p></li>
+<li><p><cite>show_images()</cite> : Affiche une grille d’images.</p></li>
+<li><p><cite>show_batch()</cite> : Affiche un lot d’images provenant d’un <cite>DataLoader</cite>.</p></li>
+</ul>
+<p>Auteur : [Gleyo Alexis, Le Roy Jules, Legris Simon]
+Date : [20/03/2025]</p>
+</section>
+</section>
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.img_utils.denorm">
+<span class="sig-prename descclassname"><span class="pre">utils.img_utils.</span></span><span class="sig-name descname"><span class="pre">denorm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.img_utils.denorm" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Annule la normalisation d’une image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image</strong> (<em>torch.Tensor</em>) – Image normalisée.</p>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>Image remise à l’échelle originale.</p>
+</dd>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.img_utils.make_dataset">
+<span class="sig-prename descclassname"><span class="pre">utils.img_utils.</span></span><span class="sig-name descname"><span class="pre">make_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">IMAGE_DIR</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalization_stats</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.img_utils.make_dataset" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Charge un dataset d’images et applique des transformations.</p>
+<p>Ce dataset combine des images normales et des images avec <cite>ColorJitter</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>IMAGE_DIR</strong> (<em>str</em>) – Chemin du dossier contenant les images.</p></li>
+<li><p><strong>image_size</strong> (<em>int</em>) – Taille des images après redimensionnement.</p></li>
+<li><p><strong>batch_size</strong> (<em>int</em>) – Taille du batch pour le DataLoader.</p></li>
+<li><p><strong>normalization_stats</strong> (<em>tuple</em>) – Moyenne et écart-type pour la</p></li>
+<li><p><strong>normalisation.</strong></p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dataset contenant les transformations
+appliquées.</p>
+</dd>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.utils.data.ConcatDataset</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.img_utils.show_batch">
+<span class="sig-prename descclassname"><span class="pre">utils.img_utils.</span></span><span class="sig-name descname"><span class="pre">show_batch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataloader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">64</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.img_utils.show_batch" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Affiche un lot d’images provenant d’un <cite>DataLoader</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataloader</strong> (<em>torch.utils.data.DataLoader</em>) – DataLoader contenant les</p></li>
+<li><p><strong>images.</strong></p></li>
+<li><p><strong>nmax</strong> (<em>int</em><em>, </em><em>optional</em>) – Nombre maximum d’images à afficher (default: 64).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.img_utils.show_images">
+<span class="sig-prename descclassname"><span class="pre">utils.img_utils.</span></span><span class="sig-name descname"><span class="pre">show_images</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">images</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nrow</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.img_utils.show_images" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Affiche une grille d’images.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>images</strong> (<em>torch.Tensor</em>) – Lot d’images à afficher.</p></li>
+<li><p><strong>nmax</strong> (<em>int</em><em>, </em><em>optional</em>) – Nombre maximum d’images à afficher (default: 64).</p></li>
+<li><p><strong>nrow</strong> (<em>int</em><em>, </em><em>optional</em>) – Nombre d’images par ligne (default: 8).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-utils.training">
+<span id="utils-training-module"></span><h2>utils.training module<a class="headerlink" href="#module-utils.training" title="Lien vers cette rubrique">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.training.entrainement">
+<span class="sig-prename descclassname"><span class="pre">utils.training.</span></span><span class="sig-name descname"><span class="pre">entrainement</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.training.entrainement" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Page Streamlit pour l’entraînement d’un nouveau modèle.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.training.fill_form">
+<span class="sig-prename descclassname"><span class="pre">utils.training.</span></span><span class="sig-name descname"><span class="pre">fill_form</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.training.fill_form" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Formulaire Streamlit pour sélectionner les hyperparamètres du modèle.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.training.saveModel">
+<span class="sig-prename descclassname"><span class="pre">utils.training.</span></span><span class="sig-name descname"><span class="pre">saveModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">generator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discriminator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modelName</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">generatorChoice</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discriminatorChoice</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lossChoice</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.training.saveModel" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Sauvegarde des poids et mise à jour du fichier architecture-model.pkl si nécessaire.</p>
+</dd></dl>
+
+</section>
+<section id="module-utils">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-utils" title="Lien vers cette rubrique">¶</a></h2>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Projet DeepLearning</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="main.html">main module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">ProjetDL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">models package</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">utils package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-utils.cuda_utils">utils.cuda_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-utils.generate">utils.generate module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-utils.img_utils">utils.img_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-utils.training">utils.training module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="models.html" title="Chapitre précédent">models package</a></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Simon Legris, Alexis Gleyo, Jules Le Roy.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="_sources/utils.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -19,3 +19,5 @@ documentation for details.
    main
    modules
    models
+   utils
+

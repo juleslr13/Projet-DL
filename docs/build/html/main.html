@@ -36,85 +36,47 @@
             
   <section id="module-main">
 <span id="main-module"></span><h1>main module<a class="headerlink" href="#module-main" title="Lien vers cette rubrique">¶</a></h1>
-<p>Module principal pour l’entraînement et la génération d’images avec un GAN.</p>
-<p>Ce fichier contient l’interface Streamlit pour configurer et entraîner un GAN basé sur MLP ou CNN.</p>
+<section id="module-principal-main-py">
+<h2>Module principal <cite>main.py</cite><a class="headerlink" href="#module-principal-main-py" title="Lien vers cette rubrique">¶</a></h2>
+<p>Ce module sert de point d’entrée pour l’application <strong>Streamlit</strong> permettant
+d’entraîner et de générer des images à l’aide d’un GAN.</p>
+<section id="fonctionnalites">
+<h3>Fonctionnalités :<a class="headerlink" href="#fonctionnalites" title="Lien vers cette rubrique">¶</a></h3>
 <ul class="simple">
-<li><p>Sélection des modèles (Générateur et Discriminateur)</p></li>
-<li><p>Sélection de la fonction de perte (Wasserstein ou Cross-Entropy)</p></li>
-<li><p>Entraînement du modèle et sauvegarde</p></li>
+<li><p><strong>Entraînement du modèle</strong> : Configuration et lancement de l’entraînement via
+<cite>utils.training.entrainement</cite>.</p></li>
+<li><p><strong>Génération d’images</strong> : Génération d’images de Pokémon via
+<cite>utils.generate.generation</cite>.</p></li>
 </ul>
-<p>Auteur : [Gleyo, Le Roy, Legris]
-Date : [14/03/2025]</p>
-<dl class="py function">
-<dt class="sig sig-object py" id="main.entrainement">
-<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">entrainement</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.entrainement" title="Lien vers cette définition">¶</a></dt>
-<dd><p>Fonction principale d’entraînement du GAN.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="main.fill_form">
-<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">fill_form</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.fill_form" title="Lien vers cette définition">¶</a></dt>
-<dd><p>Affiche un formulaire Streamlit pour sélectionner les hyperparamètres du modèle.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Renvoie<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Liste des choix de l’utilisateur [générateur, discriminateur, loss, epochs, modelName].</p>
-</dd>
-<dt class="field-even">Type renvoyé<span class="colon">:</span></dt>
-<dd class="field-even"><p>list</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="main.initialize_device">
-<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">initialize_device</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.initialize_device" title="Lien vers cette définition">¶</a></dt>
-<dd><p>Initialise le périphérique d’entraînement (CPU ou GPU).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Renvoie<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Périphérique utilisé.</p>
-</dd>
-<dt class="field-even">Type renvoyé<span class="colon">:</span></dt>
-<dd class="field-even"><p>torch.device</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="main.load_dataset">
-<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">load_dataset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.load_dataset" title="Lien vers cette définition">¶</a></dt>
-<dd><p>Charge le dataset d’images et configure le DataLoader.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Renvoie<span class="colon">:</span></dt>
-<dd class="field-odd"><p>DataLoader pour les images normalisées.</p>
-</dd>
-<dt class="field-even">Type renvoyé<span class="colon">:</span></dt>
-<dd class="field-even"><p>DataLoader</p>
-</dd>
-</dl>
-</dd></dl>
-
+</section>
+<section id="dependances">
+<h3>Dépendances :<a class="headerlink" href="#dependances" title="Lien vers cette rubrique">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Streamlit</strong> pour l’interface utilisateur.</p></li>
+<li><p><strong>Torch</strong> pour vérifier la présence de CUDA (GPU).</p></li>
+<li><p><strong>Modules `utils.training` et `utils.generate`</strong> pour gérer l’entraînement
+et la génération.</p></li>
+</ul>
+</section>
+<section id="execution">
+<h3>Exécution :<a class="headerlink" href="#execution" title="Lien vers cette rubrique">¶</a></h3>
+<p>Ce fichier peut être exécuté directement avec :</p>
+<blockquote>
+<div><p>python main.py</p>
+</div></blockquote>
+<p>Auteur : [Gleyo Alexis, Le Roy Jules, Legris Simon]
+Date : [20/03/2025]</p>
+</section>
+</section>
 <dl class="py function">
 <dt class="sig sig-object py" id="main.main">
 <span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.main" title="Lien vers cette définition">¶</a></dt>
-<dd><p>Fonction principale gérant l’interface Streamlit.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="main.saveModel">
-<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">saveModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">generator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discriminator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modelName</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">generatorChoice</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discriminatorChoice</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.saveModel" title="Lien vers cette définition">¶</a></dt>
-<dd><p>Sauvegarde les modèles entraînés.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>generator</strong> (<em>nn.Module</em>) – Modèle générateur.</p></li>
-<li><p><strong>discriminator</strong> (<em>nn.Module</em>) – Modèle discriminateur.</p></li>
-<li><p><strong>modelName</strong> (<em>str</em>) – Nom du modèle sauvegardé.</p></li>
-<li><p><strong>generatorChoice</strong> (<em>str</em>) – Type de générateur choisi.</p></li>
-<li><p><strong>discriminatorChoice</strong> (<em>str</em>) – Type de discriminateur choisi.</p></li>
-<li><p><strong>edit</strong> (<em>bool</em><em>, </em><em>optional</em>) – Si True, met à jour les métadonnées du modèle. Defaults to False.</p></li>
-</ul>
-</dd>
-</dl>
+<dd><p>Point d’entrée de l’application Streamlit.</p>
+<p>Cette fonction :
+- Configure la page Streamlit.
+- Vérifie la présence d’un GPU.
+- Affiche les instructions d’utilisation.
+- Crée les onglets <strong>Entraînement</strong> et <strong>Génération</strong>.</p>
 </dd></dl>
 
 </section>
@@ -148,12 +110,8 @@ Date : [14/03/2025]</p>
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">main module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#main.entrainement"><code class="docutils literal notranslate"><span class="pre">entrainement()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#main.fill_form"><code class="docutils literal notranslate"><span class="pre">fill_form()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#main.initialize_device"><code class="docutils literal notranslate"><span class="pre">initialize_device()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#main.load_dataset"><code class="docutils literal notranslate"><span class="pre">load_dataset()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-principal-main-py">Module principal <cite>main.py</cite></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#main.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#main.saveModel"><code class="docutils literal notranslate"><span class="pre">saveModel()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">ProjetDL</a><ul class="current">
@@ -161,6 +119,7 @@ Date : [14/03/2025]</p>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="models.html">models package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">utils package</a></li>
 </ul>
 
 <div class="relations">
