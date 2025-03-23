@@ -65,12 +65,14 @@ def make_dataset(IMAGE_DIR, image_size, batch_size, normalization_stats):
     return dataset
 
 
-def denorm(image,norm_stats):
+def denorm(image, norm_stats):
     """
     Annule la normalisation d'une image.
 
     Args:
         image (torch.Tensor): Image normalisée.
+        norm_stats (tuple):Moyenne et écart-type pour la
+        normalisation.
 
     Returns:
         torch.Tensor: Image remise à l'échelle originale.
@@ -84,13 +86,15 @@ def show_images(images, norm_stats, nmax=64, nrow=8):
 
     Args:
         images (torch.Tensor): Lot d'images à afficher.
+        norm_stats (tuple):Moyenne et écart-type pour la
+        normalisation.
         nmax (int, optional): Nombre maximum d'images à afficher (default: 64).
         nrow (int, optional): Nombre d'images par ligne (default: 8).
     """
     fig, ax = plt.subplots(figsize=(8, 8))
     ax.set_xticks([])
     ax.set_yticks([])
-    ax.imshow(make_grid(denorm(images.detach()[:nmax],norm_stats), nrow=nrow).
+    ax.imshow(make_grid(denorm(images.detach()[:nmax], norm_stats), nrow=nrow).
               permute(1, 2, 0))
     st.pyplot(fig)
 
@@ -102,6 +106,8 @@ def show_batch(dataloader, norm_stats, nmax=64):
     Args:
         dataloader (torch.utils.data.DataLoader): DataLoader contenant les
         images.
+        norm_stats (tuple):Moyenne et écart-type pour la
+        normalisation.
         nmax (int, optional): Nombre maximum d'images à afficher (default: 64).
     """
     for images, _ in dataloader:
